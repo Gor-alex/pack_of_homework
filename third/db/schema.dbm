@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+         Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="0.9.1-beta1" last-position="0,0" last-zoom="1"
+	 default-schema="public" default-owner="postgres">
+<database name="tweet" is-template="false" allow-conns="true">
+</database>
+
+<schema name="public" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<table name="tweet">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="280" y="160"/>
+	<column name="idtweet" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="iduser">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="idcountry">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="idlang">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="tweet_text">
+		<type name="text" length="0"/>
+	</column>
+	<column name="display_url">
+		<type name="text" length="0"/>
+	</column>
+	<column name="created_at">
+		<type name="text" length="0"/>
+	</column>
+	<constraint name="pk_tweet" type="pk-constr" table="public.tweet">
+		<columns names="idtweet" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="user">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="900" y="120"/>
+	<column name="iduser" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="idlang">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="nameuser">
+		<type name="text" length="0"/>
+	</column>
+	<column name="locationuser">
+		<type name="text" length="0"/>
+	</column>
+	<constraint name="pk_user" type="pk-constr" table="public.&quot;user&quot;">
+		<columns names="iduser" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="country">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="720" y="420"/>
+	<column name="idcountry" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="countrycode">
+		<type name="text" length="0"/>
+	</column>
+	<constraint name="pk_place" type="pk-constr" table="public.country">
+		<columns names="idcountry" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="lang">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1180" y="340"/>
+	<column name="idlang" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="snamelang">
+		<type name="text" length="0"/>
+	</column>
+	<constraint name="pk_lang" type="pk-constr" table="public.lang">
+		<columns names="idlang" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<constraint name="fk_tweet_user" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.&quot;user&quot;" table="public.tweet">
+	<columns names="iduser" ref-type="src-columns"/>
+	<columns names="iduser" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_tweet_place" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.country" table="public.tweet">
+	<columns names="idcountry" ref-type="src-columns"/>
+	<columns names="idcountry" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_tweet_lang" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.lang" table="public.tweet">
+	<columns names="idlang" ref-type="src-columns"/>
+	<columns names="idlang" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_user_lang" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.lang" table="public.&quot;user&quot;">
+	<columns names="idlang" ref-type="src-columns"/>
+	<columns names="idlang" ref-type="dst-columns"/>
+</constraint>
+
+<relationship name="rel_tweet_user" type="relfk"
+	 src-table="public.tweet"
+	 dst-table="public.&quot;user&quot;" reference-fk="fk_tweet_user"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_tweet_place" type="relfk"
+	 src-table="public.tweet"
+	 dst-table="public.country" reference-fk="fk_tweet_place"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_tweet_lang" type="relfk"
+	 src-table="public.tweet"
+	 dst-table="public.lang" reference-fk="fk_tweet_lang"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_user_lang" type="relfk"
+	 src-table="public.&quot;user&quot;"
+	 dst-table="public.lang" reference-fk="fk_user_lang"
+	 src-required="false" dst-required="false"/>
+
+</dbmodel>
