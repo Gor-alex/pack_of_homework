@@ -14,9 +14,6 @@ class Country(Base):
     idcountry = Column(Integer, primary_key=True, server_default=text("nextval('country_idcountry_seq'::regclass)"))
     countrycode = Column(Text)
 
-    def __hash__(self):
-        return hash(self.countrycode)
-
 
 class Lang(Base):
     __tablename__ = 'lang'
@@ -25,28 +22,37 @@ class Lang(Base):
     snamelang = Column(Text)
 
 
+class Location(Base):
+    __tablename__ = 'location'
+
+    idlocation = Column(Integer, primary_key=True, server_default=text("nextval('location_idlocation_seq'::regclass)"))
+    namelocation = Column(Text)
+
+
 class Tweet(Base):
     __tablename__ = 'tweet'
 
     idtweet = Column(BigInteger, primary_key=True)
-    iduser = Column(ForeignKey(u'user.iduser', match=u'FULL'))
     idcountry = Column(ForeignKey(u'country.idcountry', match=u'FULL'))
     idlang = Column(ForeignKey(u'lang.idlang', match=u'FULL'))
     tweet_text = Column(Text)
     display_url = Column(Text)
     created_at = Column(Text)
+    tweetsentiment = Column(BigInteger)
+    idtweetuser = Column(ForeignKey(u'tweetuser.idtweetuser', match=u'FULL'))
 
     country = relationship(u'Country')
     lang = relationship(u'Lang')
-    user = relationship(u'User')
+    tweetuser = relationship(u'Tweetuser')
 
 
-class User(Base):
-    __tablename__ = 'user'
+class Tweetuser(Base):
+    __tablename__ = 'tweetuser'
 
-    iduser = Column(BigInteger, primary_key=True)
+    idtweetuser = Column(BigInteger, primary_key=True)
     idlang = Column(ForeignKey(u'lang.idlang', match=u'FULL'))
+    idlocation = Column(ForeignKey(u'location.idlocation', match=u'FULL'))
     nameuser = Column(Text)
-    locationuser = Column(Text)
 
     lang = relationship(u'Lang')
+    location = relationship(u'Location')
