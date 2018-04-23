@@ -21,7 +21,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="idcountry">
 		<type name="integer" length="0"/>
 	</column>
-	<column name="idtweetuser">
+	<column name="iduser">
 		<type name="bigint" length="0"/>
 	</column>
 	<column name="idlang">
@@ -44,11 +44,11 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<table name="tweetuser">
+<table name="user">
 	<schema name="public"/>
 	<role name="postgres"/>
 	<position x="1098" y="191"/>
-	<column name="idtweetuser" not-null="true">
+	<column name="iduser" not-null="true">
 		<type name="bigint" length="0"/>
 	</column>
 	<column name="idlang">
@@ -60,8 +60,8 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="nameuser">
 		<type name="text" length="0"/>
 	</column>
-	<constraint name="pk_tweetuser" type="pk-constr" table="public.tweetuser">
-		<columns names="idtweetuser" ref-type="src-columns"/>
+	<constraint name="pk_user" type="pk-constr" table="public.&quot;user&quot;">
+		<columns names="iduser" ref-type="src-columns"/>
 	</constraint>
 </table>
 
@@ -98,22 +98,22 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="location">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="1488" y="256"/>
+	<position x="1462" y="166"/>
 	<column name="idlocation" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
 	<column name="namelocation">
 		<type name="text" length="0"/>
 	</column>
-	<constraint name="pk_location" type="pk-constr" table="public.location">
+	<constraint name="pk_ulocation" type="pk-constr" table="public.location">
 		<columns names="idlocation" ref-type="src-columns"/>
 	</constraint>
 </table>
 
-<constraint name="fk_tweet_tweetuser" type="fk-constr" comparison-type="MATCH FULL"
-	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.tweetuser" table="public.tweet">
-	<columns names="idtweetuser" ref-type="src-columns"/>
-	<columns names="idtweetuser" ref-type="dst-columns"/>
+<constraint name="fk_tweet_user" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.&quot;user&quot;" table="public.tweet">
+	<columns names="iduser" ref-type="src-columns"/>
+	<columns names="iduser" ref-type="dst-columns"/>
 </constraint>
 
 <constraint name="fk_tweet_place" type="fk-constr" comparison-type="MATCH FULL"
@@ -128,21 +128,21 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<columns names="idlang" ref-type="dst-columns"/>
 </constraint>
 
-<constraint name="fk_tweetuser_lang" type="fk-constr" comparison-type="MATCH FULL"
-	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.lang" table="public.tweetuser">
+<constraint name="fk_user_lang" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.lang" table="public.&quot;user&quot;">
 	<columns names="idlang" ref-type="src-columns"/>
 	<columns names="idlang" ref-type="dst-columns"/>
 </constraint>
 
-<constraint name="fk_tweetuser_location" type="fk-constr" comparison-type="MATCH FULL"
-	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.location" table="public.tweetuser">
+<constraint name="fk_user_location" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.location" table="public.&quot;user&quot;">
 	<columns names="idlocation" ref-type="src-columns"/>
 	<columns names="idlocation" ref-type="dst-columns"/>
 </constraint>
 
 <relationship name="rel_tweet_user" type="relfk"
 	 src-table="public.tweet"
-	 dst-table="public.tweetuser"
+	 dst-table="public.&quot;user&quot;"
 	 src-required="false" dst-required="false"/>
 
 <relationship name="rel_tweet_country" type="relfk"
@@ -156,12 +156,12 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 src-required="false" dst-required="false"/>
 
 <relationship name="rel_user_lang" type="relfk"
-	 src-table="public.tweetuser"
+	 src-table="public.&quot;user&quot;"
 	 dst-table="public.lang"
 	 src-required="false" dst-required="false"/>
 
 <relationship name="rel_user_location" type="relfk"
-	 src-table="public.tweetuser"
+	 src-table="public.&quot;user&quot;"
 	 dst-table="public.location"
 	 src-required="false" dst-required="false"/>
 
